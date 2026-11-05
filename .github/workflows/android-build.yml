@@ -1,60 +1,42 @@
-name: Build Android APK
 
-on:
-  push:
-    branches:
-      - main
-      - master
-  workflow_dispatch:
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
 
-permissions:
-  contents: read
+      - name: Install Android SDK packages
+        run: |
+          yes | sdkmanager --licenses
+          sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
 
-jobs:
-  build:
-    name: Build Tasfi Android APK
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 21
-
-      - name: Install project dependencies
+      - name: Install Node dependencies
         run: npm ci
 
-      # The uploaded project has Capacitor Core/CLI but does not yet
-      # declare the Android platform package. Install the matching v8 package.
-      - name: Install Capacitor Android platform
-        run: npm install --no-save @capacitor/android@^8.6.0
+      # The project package.json currently has Capacitor Core and CLI,
+      # but does not list @capacitor/android. Install the matching v8 package
+      # in the runner without changing package.json or package-lock.json.
+      - name: Install Capacitor Android
+        run: npm install --no-save --package-lock=false @capacitor/android@^8.6.0
 
-      - name: Build web app
+      - name: Build React and Vite app
         run: npm run build
 
-      # The ZIP supplied for setup does not contain an android/ directory.
-      # Generate the native Android project in the GitHub runner.
-      - name: Add Android platform
-        run: npx cap add android
+      # Reuse the checked-in Android project if it already exists.
+      # Only create it on a fresh repository where android/ is absent.
+      - name: Add Android platform if missing
+        run: |
+          if [ ! -d "android" ]; then
+            npx cap add android
+          else
+            echo "Android platform already exists; skipping cap add."
+          fi
 
-      - name: Sync web assets to Android
+      - name: Sync Capacitor
         run: npx cap sync android
 
       - name: Build debug APK
         working-directory: android
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug
+          ./gradlew --no-daemon assembleDebug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
