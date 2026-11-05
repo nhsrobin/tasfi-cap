@@ -1,0 +1,15 @@
+{
+  "appId": "com.tasfiwnlabs.tasfi",
+  "appName": "Tasfi",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true
+  },
+  "plugins": {
+    "CapacitorCookies": {
+      "enabled": true
+    }
+  }
+}

@@ -1,0 +1,340 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+:root {
+  --bg-color: #fdf2f8;
+  --primary-color: #be185d;
+  --primary-hover: #9d174d;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --card-bg: #ffffff;
+  --border-color: #fce7f3;
+  --input-bg: #f9fafb;
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+/* Themes */
+.theme-love, .theme-default {
+  --primary-color: #e11d48;
+  --primary-hover: #be123c;
+  --bg-color: #fff1f2;
+  --border-color: #ffe4e6;
+}
+
+.theme-sad {
+  --primary-color: #475569;
+  --primary-hover: #334155;
+  --bg-color: #f1f5f9;
+  --border-color: #e2e8f0;
+}
+
+.theme-nature {
+  --primary-color: #059669;
+  --primary-hover: #047857;
+  --bg-color: #f0fdf4;
+  --border-color: #dcfce7;
+}
+
+.theme-classic {
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+  --bg-color: #f8fafc;
+  --border-color: #f1f5f9;
+}
+
+/* Display Modes */
+.mode-dark, .dark {
+  --bg-color: #0f172a;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --card-bg: #1e293b;
+  --border-color: #334155;
+  --input-bg: #0f172a;
+  --shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+  color-scheme: dark;
+}
+
+.mode-eye-comfort {
+  --bg-color: #fefce8;
+  --text-main: #422006;
+  --text-muted: #92400e;
+  --card-bg: #fffbeb;
+  --border-color: #fef08a;
+  --input-bg: #fff7ed;
+  filter: sepia(0.4) contrast(0.95) brightness(0.95);
+}
+
+/* Dark mode theme adjustments - ensure these override the theme defaults in dark mode */
+.mode-dark .theme-love, .mode-dark .theme-default,
+.dark .theme-love, .dark .theme-default {
+  --bg-color: #0f172a;
+  --primary-color: #fb7185;
+  --primary-hover: #f43f5e;
+  --border-color: #334155;
+}
+
+.mode-dark .theme-sad, .dark .theme-sad {
+  --bg-color: #0f172a;
+  --primary-color: #94a3b8;
+  --primary-hover: #64748b;
+  --border-color: #334155;
+}
+
+.mode-dark .theme-nature, .dark .theme-nature {
+  --bg-color: #0f172a;
+  --primary-color: #34d399;
+  --primary-hover: #10b981;
+  --border-color: #334155;
+}
+
+.mode-dark .theme-classic, .dark .theme-classic {
+  --bg-color: #0f172a;
+  --primary-color: #818cf8;
+  --primary-hover: #6366f1;
+  --border-color: #334155;
+}
+
+@theme {
+  --font-sans: "Inter", "Hind Siliguri", ui-sans-serif, system-ui, sans-serif;
+  --color-romantic-pink: var(--bg-color);
+  --color-romantic-deep: var(--primary-color);
+  --color-romantic-hover: var(--primary-hover);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-card-bg: var(--card-bg);
+  --color-border-custom: var(--border-color);
+  --color-input-bg: var(--input-bg);
+}
+
+html, body {
+  height: 100%;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  overscroll-behavior-y: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  height: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease, filter 0.3s ease;
+}
+
+/* Animations for Theme Backgrounds */
+@keyframes float {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes bubble {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  10% { opacity: 0.6; }
+  50% { transform: translateY(-50vh) scale(1.2) translateX(20px); }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-100vh) scale(1) translateX(-20px); opacity: 0; }
+}
+
+@keyframes rain {
+  0% { transform: translateY(-10vh); opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { transform: translateY(110vh); opacity: 0; }
+}
+
+.floating-element {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.markdown-body {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  line-height: 1.22 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.markdown-body p {
+  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+  line-height: 1.22 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  display: block !important;
+}
+
+/* Normal, minimal gap between two paragraphs */
+.markdown-body p + p {
+  margin-top: 0.15rem !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+}
+
+.markdown-body p:empty {
+  display: none !important;
+}
+
+.markdown-body p:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body ul, .markdown-body ol {
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.markdown-body ul {
+  list-style-type: disc;
+}
+
+.markdown-body ol {
+  list-style-type: decimal;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+}
+
+.markdown-body em {
+  font-style: italic;
+}
+
+.markdown-body code {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.2rem;
+  font-family: monospace;
+}
+
+/* Ensure chat bubbles and markdown body NEVER show internal scrollbars */
+.markdown-body,
+.markdown-body *,
+.chat-bubble,
+.chat-bubble * {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.markdown-body::-webkit-scrollbar,
+.markdown-body *::-webkit-scrollbar,
+.chat-bubble::-webkit-scrollbar,
+.chat-bubble *::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Custom scrollbar only for scrollable containers (main chat container, sidebar) */
+main::-webkit-scrollbar,
+aside::-webkit-scrollbar,
+.scrollable-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+main::-webkit-scrollbar-track,
+aside::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+main::-webkit-scrollbar-thumb,
+aside::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  opacity: 0.3;
+  border-radius: 10px;
+}
+
+main::-webkit-scrollbar-thumb:hover,
+aside::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover);
+}
+
+@keyframes highlight-fade {
+  0% { background-color: rgba(190, 24, 93, 0.2); }
+  100% { background-color: transparent; }
+}
+
+.highlight-message {
+  animation: highlight-fade 2s ease-out;
+}
+
+/* Responsive message styling to prevent vertical scrolling inside messages */
+.markdown-body pre, 
+.markdown-body code {
+  max-height: none !important;
+  overflow-y: visible !important;
+}
+
+/* Custom Scrollbar behavior for Textarea */
+.textarea-scroll-active::-webkit-scrollbar {
+  width: 4px !important;
+  height: 4px !important;
+  display: block !important;
+}
+.textarea-scroll-active::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+.textarea-scroll-active::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.5) !important;
+  border-radius: 9999px !important;
+}
+.textarea-scroll-active {
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent !important;
+}
+
+.textarea-scroll-inactive::-webkit-scrollbar {
+  display: none !important;
+  width: 0px !important;
+  background: transparent !important;
+}
+.textarea-scroll-inactive {
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;  /* Firefox */
+}
+
+/* Audio Visualizer Pulse Animation */
+@keyframes audio-bar-pulse {
+  0%, 100% {
+    transform: scaleY(0.4);
+  }
+  50% {
+    transform: scaleY(1.3);
+  }
+}
+.animate-audio-bar {
+  animation: audio-bar-pulse 0.8s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.95;
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s infinite ease-in-out;
+}
+

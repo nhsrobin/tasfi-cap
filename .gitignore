@@ -1,0 +1,13 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Internal build platform metadata & caches
+.aistudio/
+.aistudio
+metadata.json
