@@ -59,7 +59,7 @@ const getInitialMessage = (moodStr: string = 'normal'): Message => {
   };
 };
 
-const PROFILE_PIC = "/icon.png";
+const PROFILE_PIC = "/profile.png";
 
 const SplashScreen = ({ onFinish }: { onFinish: () => void }) => {
   useEffect(() => {
@@ -1983,7 +1983,7 @@ export default function App() {
                         setDisplayMode('light');
                         setMood('normal');
                         setNickname('তাসফি');
-                        setProfilePic("/icon.png");
+                        setProfilePic("/profile.png");
                       }}
                       className="w-full py-3 px-4 bg-input-bg text-text-muted hover:text-romantic-deep hover:bg-romantic-pink/20 rounded-2xl transition-all text-xs font-bold border border-border-custom flex items-center justify-center gap-2"
                     >

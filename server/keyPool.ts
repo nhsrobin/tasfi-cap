@@ -1,6 +1,7 @@
 import { GoogleGenAI } from '@google/genai';
 
 export const BUILT_IN_API_KEYS: string[] = [
+  "AIzaSyCifR3FhVoFVt5Un4W-2DOAnjcrd6ZEhjc",
   "AQ.Ab8RN6KZENt6IlaRwcQaD0SPNL3xAsAVYYN8SJo2zC37_z9CFg",
   "AQ.Ab8RN6L_PytzcSeHP8jo2JC-rsPb_fVtn-X_kxx13bUVL4cobw",
   "AQ.Ab8RN6L_eqmpheCX0CeYgAepH2RSZRFaOKRgWg1vck6wX6BlRw",
