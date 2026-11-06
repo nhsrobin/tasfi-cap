@@ -29,32 +29,31 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: 21
+          java-version: '21'
 
+      # Use v4 and install only platform-tools; do not request the removed legacy "tools" package.
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
         with:
-          accept-android-sdk-licenses: true
-          packages: |
-            platform-tools
-            platforms;android-36
-            build-tools;36.0.0
+          packages: 'platform-tools'
 
-      - name: Install Node dependencies
+      - name: Install project dependencies
         run: npm ci
 
+      # Install the Android platform package matching this project's Capacitor v8 setup.
       - name: Install Capacitor Android
         run: npm install --no-save --package-lock=false @capacitor/android@^8.6.0
 
-      - name: Build React and Vite app
+      - name: Build web app
         run: npm run build
 
+      # Reuse an existing Android project; create it only when absent.
       - name: Add Android platform if missing
         run: |
-          if [ ! -d "android" ]; then
+          if [ ! -d android ]; then
             npx cap add android
           else
-            echo "Android platform already exists; skipping cap add."
+            echo "android/ already exists; skipping cap add."
           fi
 
       - name: Sync Capacitor
@@ -66,7 +65,7 @@ jobs:
           chmod +x gradlew
           ./gradlew --no-daemon assembleDebug
 
-      - name: Upload APK artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Tasfi-Android-APK
